@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Трекер Обучения - Финансовая Мотивация</title>
+    <style>
+        :root {
+            --primary: #2A2D43;
+            --secondary: #4361EE;
+            --accent: #4CC9F0;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --text: #E8EAED;
+            --background: #121212;
+            --surface: #1E1E1E;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: var(--surface);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #B0B0B0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid #333;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .habits-list {
+            margin-top: 20px;
+        }
+        
+        .habit-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .habit-item:last-child {
+            border-bottom: none;
+        }
+        
+        .habit-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 4px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .habit-checkbox.checked {
+            background: var(--success);
+            border-color: var(--success);
+        }
+        
+        .habit-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+        }
+        
+        .level-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .level-novice {
+            background: var(--success);
+            color: white;
+        }
+        
+        .level-fighter {
+            background: var(--warning);
+            color: black;
+        }
+        
+        .level-veteran {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .combo-display {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(67, 97, 238, 0.2);
+            margin: 15px 0;
+        }
+        
+        .combo-count {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .financial-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .financial-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .money-positive {
+            color: var(--success);
+        }
+        
+        .money-negative {
+            color: var(--danger);
+        }
+        
+        .system-rules {
+            margin-top: 20px;
+        }
+        
+        .rule-section {
+            margin-bottom: 25px;
+        }
+        
+        .rule-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .rule-list {
+            margin-left: 20px;
+        }
+        
+        .rule-list li {
+            margin-bottom: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin: 10px 0;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(67, 97, 238, 0.3);
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--accent);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .quest-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .quest-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 4px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .quest-checkbox.checked {
+            background: var(--success);
+            border-color: var(--success);
+        }
+        
+        .quest-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+        }
+        
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .history-table th, .history-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        
+        .history-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--accent);
+        }
+        
+        .history-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .settings-panel {
+            margin-top: 20px;
+        }
+        
+        .setting-item {
+            margin-bottom: 15px;
+        }
+        
+        .setting-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .setting-item input, .setting-item select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .week-selector {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .week-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .week-nav-btn {
+            padding: 8px 15px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .export-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .export-btn {
+            padding: 10px 20px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RPG Трекер Обучения</h1>
+            <p class="subtitle">Финансовая мотивация • Уровни сложности • Комбо-система • Только реальные деньги</p>
+        </header>
+        
+        <div class="week-selector">
+            <div>
+                <h3>Неделя: 16-22 Ноября 2025</h3>
+                <p>Текущий депозит: <strong>1,000 ₽</strong></p>
+            </div>
+            <div class="week-nav">
+                <button class="week-nav-btn" onclick="changeWeek(-1)">← Предыдущая</button>
+                <button class="week-nav-btn" onclick="changeWeek(1)">Следующая →</button>
+            </div>
+        </div>
+        
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Ваш прогресс</h2>
+                    <div class="level-badge level-fighter">Уровень: Боец</div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div>Прогресс дня</div>
+                        <div class="stat-value" id="day-progress">63%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-bar" style="width: 63%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div>Выполнено привычек</div>
+                        <div class="stat-value" id="habits-completed">5/8</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div>Текущее комбо</div>
+                        <div class="stat-value" id="combo-days">3 дня</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div>Депозит на неделю</div>
+                        <div class="stat-value" id="weekly-deposit">1,000 ₽</div>
+                    </div>
+                </div>
+                
+                <div class="combo-display" id="combo-display">
+                    <div>Позитивное комбо: 3 дня</div>
+                    <div class="combo-count">3 дня → 50% возврата депозита</div>
+                    <div>Следующий бонус: 5 дней → 100% возврата</div>
+                </div>
+                
+                <h3>Ежедневные привычки</h3>
+                <div class="habits-list" id="habits-list">
+                    <!-- Привычки будут добавлены через JavaScript -->
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('finance')">Финансы</div>
+                    <div class="tab" onclick="switchTab('quests')">Квесты</div>
+                    <div class="tab" onclick="switchTab('levels')">Уровни</div>
+                    <div class="tab" onclick="switchTab('history')">История</div>
+                    <div class="tab" onclick="switchTab('settings')">Настройки</div>
+                </div>
+                
+                <div id="finance" class="tab-content active">
+                    <h3>Финансовая система</h3>
+                    <p style="margin-bottom: 15px; color: #B0B0B0;">Ваши реальные деньги в игре. Возвращайте с бонусом или теряйте при провале.</p>
+                    
+                    <div class="financial-stats">
+                        <div class="financial-card">
+                            <div>Еженедельный депозит</div>
+                            <div class="stat-value">1,000+ ₽</div>
+                            <div style="font-size: 0.9rem;">Сумма, которая реально болит</div>
+                        </div>
+                        
+                        <div class="financial-card">
+                            <div>Возврат ×2</div>
+                            <div class="stat-value">6/7 дней</div>
+                            <div style="font-size: 0.9rem;">+ 100% квестов</div>
+                        </div>
+                        
+                        <div class="financial-card">
+                            <div>Частичный возврат</div>
+                            <div class="stat-value">5/7 дней</div>
+                            <div style="font-size: 0.9rem;">+ 80% квестов</div>
+                        </div>
+                        
+                        <div class="financial-card">
+                            <div>Провал</div>
+                            <div class="stat-value money-negative">0%</div>
+                            <div style="font-size: 0.9rem;">Деньги сгорают</div>
+                        </div>
+                    </div>
+                    
+                    <div class="system-rules">
+                        <div class="rule-section">
+                            <div class="rule-title">💥 КОМБО-СИСТЕМА</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div>
+                                    <div style="color: var(--success); margin-bottom: 10px;">✅ ПОЛОЖИТЕЛЬНЫЕ КОМБО:</div>
+                                    <ul class="rule-list">
+                                        <li>3 дня → возврат 50% недельного депозита</li>
+                                        <li>5 дней → возврат 100% депозита</li>
+                                        <li>7 дней → возврат ×2</li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <div style="color: var(--danger); margin-bottom: 10px;">❌ ОТРИЦАТЕЛЬНЫЕ КОМБО:</div>
+                                    <ul class="rule-list">
+                                        <li>Пропуск 1 дня → обнуление комбо</li>
+                                        <li>Пропуск 2 дней → -50% от депозита</li>
+                                        <li>Пропуск 3 дней → депозит сгорает полностью</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-section">
+                            <div class="rule-title">📈 СИСТЕМА РЕКОРДОВ</div>
+                            <ul class="rule-list">
+                                <li>Каждую неделю бить рекорд по выполненным дням</li>
+                                <li>Новый рекорд → бонус 500 руб к следующему депозиту</li>
+                                <li>Не побил рекорд → увеличение депозита на 20% (следующая неделя дороже)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="quests" class="tab-content">
+                    <h3>Ежедневные квесты</h3>
+                    <p style="margin-bottom: 15px; color: #B0B0B0;">Выполняйте квесты для получения бонусов и избежания штрафов.</p>
+                    
+                    <div id="daily-quests">
+                        <!-- Ежедневные квесты будут добавлены через JavaScript -->
+                    </div>
+                    
+                    <h3 style="margin-top: 25px;">Недельные квесты</h3>
+                    
+                    <div id="weekly-quests">
+                        <!-- Недельные квесты будут добавлены через JavaScript -->
+                    </div>
+                </div>
+                
+                <div id="levels" class="tab-content">
+                    <h3>Система уровней</h3>
+                    <p style="margin-bottom: 15px; color: #B0B0B0;">Постепенно увеличивайте сложность по мере роста ваших навыков.</p>
+                    
+                    <div class="rule-section">
+                        <div class="rule-title">
+                            <span class="level-badge level-novice">НОВИЧОК</span> (база)
+                        </div>
+                        <ul class="rule-list">
+                            <li>Сон 7-8 часов</li>
+                            <li>Еда (здоровая)</li>
+                            <li>Упражнения 30 мин</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rule-section">
+                        <div class="rule-title">
+                            <span class="level-badge level-fighter">БОЕЦ</span> (добавляется)
+                        </div>
+                        <ul class="rule-list">
+                            <li>Все привычки Новичка</li>
+                            <li>Домашка корейского (полностью)</li>
+                            <li>Соцсети ≤ 90 мин</li>
+                            <li>No Porn/Alcohol</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rule-section">
+                        <div class="rule-title">
+                            <span class="level-badge level-veteran">ВЕТЕРАН</span> (максимум)
+                        </div>
+                        <ul class="rule-list">
+                            <li>Все привычки Бойца</li>
+                            <li>1 серия дорамы без субтитров + разбор 5 случайных предложений</li>
+                            <li>Чтение 1 страницы "Солярис"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div id="history" class="tab-content">
+                    <h3>История недель</h3>
+                    <p style="margin-bottom: 15px; color: #B0B0B0;">Отслеживайте ваш прогресс за предыдущие недели.</p>
+                    
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Неделя</th>
+                                <th>Прогресс</th>
+                                <th>Депозит</th>
+                                <th>Возврат</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <!-- История будет добавлена через JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="settings" class="tab-content">
+                    <h3>Настройки трекера</h3>
+                    <p style="margin-bottom: 15px; color: #B0B0B0;">Настройте трекер под свои потребности.</p>
+                    
+                    <div class="settings-panel">
+                        <div class="setting-item">
+                            <label>Уровень сложности</label>
+                            <select id="difficulty-level">
+                                <option value="novice">Новичок</option>
+                                <option value="fighter" selected>Боец</option>
+                                <option value="veteran">Ветеран</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label>Еженедельный депозит (₽)</label>
+                            <input type="number" id="weekly-deposit-input" value="1000" min="500" step="100">
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label>Начало недели</label>
+                            <select id="week-start">
+                                <option value="0">Понедельник</option>
+                                <option value="1">Вторник</option>
+                                <option value="2">Среда</option>
+                                <option value="3">Четверг</option>
+                                <option value="4">Пятница</option>
+                                <option value="5">Суббота</option>
+                                <option value="6">Воскресенье</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <label>Уведомления</label>
+                            <select id="notifications">
+                                <option value="enabled">Включены</option>
+                                <option value="disabled">Выключены</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn" onclick="saveSettings()">Сохранить настройки</button>
+                    </div>
+                    
+                    <div class="export-section">
+                        <h3>Экспорт данных</h3>
+                        <p style="margin-bottom: 15px; color: #B0B0B0;">Сохраните свои данные для резервной копии или анализа.</p>
+                        
+                        <div class="export-buttons">
+                            <button class="export-btn" onclick="exportData('csv')">
+                                📊 Экспорт в CSV
+                            </button>
+                            <button class="export-btn" onclick="exportData('json')">
+                                📁 Экспорт в JSON
+                            </button>
+                            <button class="export-btn" onclick="importData()">
+                                📥 Импорт данных
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные приложения
+        const appData = {
+            currentWeek: 0,
+            weeks: [
+                {
+                    startDate: '16 Ноября 2025',
+                    endDate: '22 Ноября 2025',
+                    deposit: 1000,
+                    habits: [
+                        { id: 1, name: 'Сон 7-8 часов', level: 'novice', completed: true },
+                        { id: 2, name: 'Еда (здоровая)', level: 'novice', completed: true },
+                        { id: 3, name: 'Упражнения 30 мин', level: 'novice', completed: true },
+                        { id: 4, name: 'Домашка корейского', level: 'fighter', completed: true },
+                        { id: 5, name: 'Соцсети ≤ 90 мин', level: 'fighter', completed: false },
+                        { id: 6, name: 'No Porn/Alcohol', level: 'fighter', completed: true },
+                        { id: 7, name: '1 серия дорамы без субтитров', level: 'veteran', completed: false },
+                        { id: 8, name: 'Чтение "Солярис" (1 стр.)', level: 'veteran', completed: false }
+                    ],
+                    quests: {
+                        daily: [
+                            { id: 1, name: 'Домашка от препода (обязательно)', completed: true },
+                            { id: 2, name: 'Чтение "Солярис" (1 страница)', completed: false },
+                            { id: 3, name: 'Дорама без субтитров + разбор 5 предложений', completed: false }
+                        ],
+                        weekly: [
+                            { id: 4, name: 'Словарь из 35 новых слов/выражений', completed: false },
+                            { id: 5, name: 'Summary всей просмотренной дорамы за неделю', completed: false }
+                        ]
+                    },
+                    comboDays: 3,
+                    progress: 63
+                }
+            ],
+            history: [
+                { week: '9-15 Ноября 2025', progress: '71%', deposit: '1,000 ₽', return: '2,000 ₽', status: 'Успех' },
+                { week: '2-8 Ноября 2025', progress: '43%', deposit: '1,000 ₽', return: '0 ₽', status: 'Провал' },
+                { week: '26 Октября - 1 Ноября 2025', progress: '57%', deposit: '1,200 ₽', return: '0 ₽', status: 'Провал' },
+                { week: '19-25 Октября 2025', progress: '64%', deposit: '1,000 ₽', return: '1,000 ₽', status: 'Частичный' }
+            ],
+            settings: {
+                difficulty: 'fighter',
+                deposit: 1000,
+                weekStart: 0,
+                notifications: 'enabled'
+            }
+        };
+
+        // Инициализация приложения
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            renderHabits();
+            renderQuests();
+            renderHistory();
+            updateProgress();
+            updateWeekDisplay();
+        });
+
+        // Загрузка данных из localStorage
+        function loadData() {
+            const savedData = localStorage.getItem('rpgTrackerData');
+            if (savedData) {
+                const parsedData = JSON.parse(savedData);
+                Object.assign(appData, parsedData);
+            }
+        }
+
+        // Сохранение данных в localStorage
+        function saveData() {
+            localStorage.setItem('rpgTrackerData', JSON.stringify(appData));
+        }
+
+        // Отображение привычек
+        function renderHabits() {
+            const habitsList = document.getElementById('habits-list');
+            habitsList.innerHTML = '';
+            
+            const currentWeek = appData.weeks[appData.currentWeek];
+            
+            currentWeek.habits.forEach(habit => {
+                const habitItem = document.createElement('div');
+                habitItem.className = 'habit-item';
+                
+                const levelClass = `level-${habit.level}`;
+                const levelText = habit.level === 'novice' ? 'Новичок' : 
+                                 habit.level === 'fighter' ? 'Боец' : 'Ветеран';
+                
+                habitItem.innerHTML = `
+                    <div class="habit-checkbox ${habit.completed ? 'checked' : ''}" onclick="toggleHabit(${habit.id})"></div>
+                    <div>${habit.name} <span class="level-badge ${levelClass}">${levelText}</span></div>
+                `;
+                
+                habitsList.appendChild(habitItem);
+            });
+        }
+
+        // Отображение квестов
+        function renderQuests() {
+            const dailyQuests = document.getElementById('daily-quests');
+            const weeklyQuests = document.getElementById('weekly-quests');
+            
+            dailyQuests.innerHTML = '';
+            weeklyQuests.innerHTML = '';
+            
+            const currentWeek = appData.weeks[appData.currentWeek];
+            
+            // Ежедневные квесты
+            currentWeek.quests.daily.forEach(quest => {
+                const questItem = document.createElement('div');
+                questItem.className = 'quest-item';
+                questItem.innerHTML = `
+                    <div class="quest-checkbox ${quest.completed ? 'checked' : ''}" onclick="toggleQuest('daily', ${quest.id})"></div>
+                    <div>
+                        <div>${quest.name}</div>
+                        <div style="font-size: 0.9rem; color: #B0B0B0;">Ежедневный квест</div>
+                    </div>
+                `;
+                dailyQuests.appendChild(questItem);
+            });
+            
+            // Недельные квесты
+            currentWeek.quests.weekly.forEach(quest => {
+                const questItem = document.createElement('div');
+                questItem.className = 'quest-item';
+                questItem.innerHTML = `
+                    <div class="quest-checkbox ${quest.completed ? 'checked' : ''}" onclick="toggleQuest('weekly', ${quest.id})"></div>
+                    <div>
+                        <div>${quest.name}</div>
+                        <div style="font-size: 0.9rem; color: #B0B0B0;">Недельный квест</div>
+                    </div>
+                `;
+                weeklyQuests.appendChild(questItem);
+            });
+        }
+
+        // Отображение истории
+        function renderHistory() {
+            const historyTableBody = document.getElementById('history-table-body');
+            historyTableBody.innerHTML = '';
+            
+            appData.history.forEach(week => {
+                const row = document.createElement('tr');
+                
+                let statusClass = '';
+                if (week.status === 'Успех') statusClass = 'money-positive';
+                else if (week.status === 'Провал') statusClass = 'money-negative';
+                
+                row.innerHTML = `
+                    <td>${week.week}</td>
+                    <td>${week.progress}</td>
+                    <td>${week.deposit}</td>
+                    <td class="${statusClass}">${week.return}</td>
+                    <td>${week.status}</td>
+                `;
+                
+                historyTableBody.appendChild(row);
+            });
+        }
+
+        // Переключение привычки
+        function toggleHabit(habitId) {
+            const currentWeek = appData.weeks[appData.currentWeek];
+            const habit = currentWeek.habits.find(h => h.id === habitId);
+            
+            if (habit) {
+                habit.completed = !habit.completed;
+                saveData();
+                renderHabits();
+                updateProgress();
+            }
+        }
+
+        // Переключение квеста
+        function toggleQuest(type, questId) {
+            const currentWeek = appData.weeks[appData.currentWeek];
+            const quests = type === 'daily' ? currentWeek.quests.daily : currentWeek.quests.weekly;
+            const quest = quests.find(q => q.id === questId);
+            
+            if (quest) {
+                quest.completed = !quest.completed;
+                saveData();
+                renderQuests();
+            }
+        }
+
+        // Обновление прогресса
+        function updateProgress() {
+            const currentWeek = appData.weeks[appData.currentWeek];
+            
+            // Подсчет выполненных привычек
+            const completedHabits = currentWeek.habits.filter(h => h.completed).length;
+            const totalHabits = currentWeek.habits.length;
+            const progress = Math.round((completedHabits / totalHabits) * 100);
+            
+            currentWeek.progress = progress;
+            
+            // Обновление UI
+            document.getElementById('day-progress').textContent = `${progress}%`;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('habits-completed').textContent = `${completedHabits}/${totalHabits}`;
+            document.getElementById('combo-days').textContent = `${currentWeek.comboDays} дней`;
+            document.getElementById('weekly-deposit').textContent = `${currentWeek.deposit} ₽`;
+            
+            // Обновление комбо-дисплея
+            const comboDisplay = document.getElementById('combo-display');
+            if (currentWeek.comboDays >= 7) {
+                comboDisplay.innerHTML = `
+                    <div>Позитивное комбо: ${currentWeek.comboDays} дней</div>
+                    <div class="combo-count">7 дней → возврат ×2</div>
+                    <div>Поздравляем! Вы достигли максимального комбо!</div>
+                `;
+            } else if (currentWeek.comboDays >= 5) {
+                comboDisplay.innerHTML = `
+                    <div>Позитивное комбо: ${currentWeek.comboDays} дней</div>
+                    <div class="combo-count">5 дней → 100% возврата депозита</div>
+                    <div>Следующий бонус: 7 дней → возврат ×2</div>
+                `;
+            } else if (currentWeek.comboDays >= 3) {
+                comboDisplay.innerHTML = `
+                    <div>Позитивное комбо: ${currentWeek.comboDays} дней</div>
+                    <div class="combo-count">3 дня → 50% возврата депозита</div>
+                    <div>Следующий бонус: 5 дней → 100% возврата</div>
+                `;
+            } else {
+                comboDisplay.innerHTML = `
+                    <div>Позитивное комбо: ${currentWeek.comboDays} дней</div>
+                    <div class="combo-count">Нет активного комбо</div>
+                    <div>Следующий бонус: 3 дня → 50% возврата депозита</div>
+                `;
+            }
+            
+            saveData();
+        }
+
+        // Переключение вкладок
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Смена недели
+        function changeWeek(direction) {
+            appData.currentWeek += direction;
+            
+            // Ограничиваем текущую неделю в пределах доступных данных
+            if (appData.currentWeek < 0) appData.currentWeek = 0;
+            if (appData.currentWeek >= appData.weeks.length) {
+                // Создаем новую неделю, если достигли конца
+                const lastWeek = appData.weeks[appData.weeks.length - 1];
+                const newWeek = JSON.parse(JSON.stringify(lastWeek));
+                
+                // Сбрасываем прогресс для новой недели
+                newWeek.habits.forEach(habit => habit.completed = false);
+                newWeek.quests.daily.forEach(quest => quest.completed = false);
+                newWeek.quests.weekly.forEach(quest => quest.completed = false);
+                newWeek.comboDays = 0;
+                newWeek.progress = 0;
+                
+                // Обновляем даты (простая имитация)
+                const startDate = new Date();
+                startDate.setDate(startDate.getDate() + (appData.weeks.length * 7));
+                const endDate = new Date(startDate);
+                endDate.setDate(endDate.getDate() + 6);
+                
+                newWeek.startDate = formatDate(startDate);
+                newWeek.endDate = formatDate(endDate);
+                
+                appData.weeks.push(newWeek);
+            }
+            
+            updateWeekDisplay();
+            renderHabits();
+            renderQuests();
+            updateProgress();
+        }
+
+        // Форматирование даты
+        function formatDate(date) {
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('ru-RU', options);
+        }
+
+        // Обновление отображения недели
+        function updateWeekDisplay() {
+            const currentWeek = appData.weeks[appData.currentWeek];
+            document.querySelector('.week-selector h3').textContent = 
+                `Неделя: ${currentWeek.startDate} - ${currentWeek.endDate}`;
+            document.querySelector('.week-selector p strong').textContent = 
+                `${currentWeek.deposit} ₽`;
+        }
+
+        // Сохранение настроек
+        function saveSettings() {
+            appData.settings.difficulty = document.getElementById('difficulty-level').value;
+            appData.settings.deposit = parseInt(document.getElementById('weekly-deposit-input').value);
+            appData.settings.weekStart = parseInt(document.getElementById('week-start').value);
+            appData.settings.notifications = document.getElementById('notifications').value;
+            
+            // Обновляем текущую неделю
+            const currentWeek = appData.weeks[appData.currentWeek];
+            currentWeek.deposit = appData.settings.deposit;
+            
+            saveData();
+            updateProgress();
+            updateWeekDisplay();
+            
+            alert('Настройки сохранены!');
+        }
+
+        // Экспорт данных
+        function exportData(format) {
+            let dataStr, fileName, mimeType;
+            
+            if (format === 'csv') {
+                // Простой CSV экспорт для истории
+                let csvContent = "Неделя,Прогресс,Депозит,Возврат,Статус\n";
+                
+                appData.history.forEach(week => {
+                    csvContent += `"${week.week}","${week.progress}","${week.deposit}","${week.return}","${week.status}"\n`;
+                });
+                
+                dataStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csvContent);
+                fileName = "rpg_tracker_history.csv";
+                mimeType = "text/csv";
+            } else {
+                // JSON экспорт всех данных
+                dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+                fileName = "rpg_tracker_data.json";
+                mimeType = "application/json";
+            }
+            
+            const link = document.createElement("a");
+            link.setAttribute("href", dataStr);
+            link.setAttribute("download", fileName);
+            link.click();
+        }
+
+        // Импорт данных
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    try {
+                        const importedData = JSON.parse(event.target.result);
+                        Object.assign(appData, importedData);
+                        saveData();
+                        
+                        // Перезагружаем интерфейс
+                        renderHabits();
+                        renderQuests();
+                        renderHistory();
+                        updateProgress();
+                        updateWeekDisplay();
+                        
+                        alert('Данные успешно импортированы!');
+                    } catch (error) {
+                        alert('Ошибка при импорте данных: ' + error.message);
+                    }
+                };
+                
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+    </script>
+</body>
+</html>
